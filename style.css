@@ -1,0 +1,14 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f0f8ff;
+}
+canvas {
+  margin-top: 20px;
+  border: 2px solid #333;
+  border-radius: 50%;
+}
+#namesList {
+  margin: 10px;
+  font-weight: bold;
+}
