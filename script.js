@@ -79,3 +79,17 @@ function resetNames() {
 function updateList() {
   document.getElementById('namesList').innerText = `Names: ${names.join(', ')}`;
 }
+
+function generateLink() {
+  if (names.length === 0) {
+    alert("Please add names first!");
+    return;
+  }
+  const encoded = encodeURIComponent(names.join(','));
+  const link = `${window.location.origin}${window.location.pathname}?names=${encoded}`;
+  document.getElementById('shareLink').innerHTML = `
+    <input type="text" value="${link}" readonly style="width:80%;" onclick="this.select()" />
+    <p>Copy and share this link</p>
+  `;
+}
+
