@@ -1,3 +1,13 @@
+const urlParams = new URLSearchParams(window.location.search);
+let names = [];
+
+if (urlParams.has('names')) {
+  names = urlParams.get('names').split(',');
+} else {
+  names = [];
+}
+
+
 let names = [];
 let angle = 0;
 let spinning = false;
