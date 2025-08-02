@@ -9,14 +9,13 @@
 <body>
    <audio id="spinAudio" src="spin.mp3"></audio>
 <audio id="clapAudio" src="clap.mp3"></audio>
-  <h2 id="winnerName" class="winner-text"></h2>
-  <h3>🌤 Current Weather:</h3>
+  <h1>🌤 Current Weather:</h1>
 <div id="weather">Loading weather...</div>
-  <h1>Spin the Wheel!</h1>
+  <h2>Spin the Wheel!</h2>
   <button onclick="generateLink()">📎 Shareable Link</button>
 <p id="shareLink"></p>
 
-  <canvas id="wheel" width="500" height="500"></canvas>
+  <canvas id="wheel" width="600" height="600"></canvas>
   <div>
     <input id="nameInput" placeholder="Enter name" />
     <button onclick="addName()">Add Name</button>
@@ -25,7 +24,8 @@
   </div>
  // <div id="winnerName" class="winner-text"></div>
 <div id="namesList" onclick="clickRemove(event)"></div>  
-  <h2 id="winner"></h2>
+  <h3 id="winner"></h3>
+    <h4 id="winnerName" class="winner-text"></h4>
 
   <script src="script.js"></script>
       <!-- Add confetti library from CDN -->
