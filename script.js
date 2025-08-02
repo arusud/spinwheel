@@ -8,7 +8,7 @@ if (urlParams.has('names')) {
 }
 
 
-let names = [];
+//let names = [];  duplicate , its already mentioned above, remove it
 let angle = 0;
 let spinning = false;
 const canvas = document.getElementById('wheel');
