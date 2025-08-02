@@ -72,13 +72,19 @@ function spin() {
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
       // Clap!
-      clapAudio.currentTime = 0;
-      clapAudio.play();
+    clapAudio.currentTime = 0;
+clapAudio.play();
+
+setTimeout(() => {
+  clapAudio.pause();
+  clapAudio.currentTime = 0;
+}, 6000); // 6000 ms = 6 seconds
+
 
       // Remove winner from list
-      names.splice(winnerIndex, 1);
-      updateList();
-      drawWheel();
+      //names.splice(winnerIndex, 1);
+      //updateList();
+      //drawWheel();
     }
   };
 
