@@ -83,7 +83,7 @@ function spin() {
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
       const winnerDisplay = document.getElementById("winnerName");
-winnerDisplay.textContent = winner;
+winnerDisplay.textContent = winnerName;
 winnerDisplay.classList.add("zoom-out");
 
 // Remove class after animation ends so it can be reused
