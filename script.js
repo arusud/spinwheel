@@ -82,6 +82,13 @@ function spin() {
       const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
+      confetti({
+  particleCount: 200,
+  spread: 150,
+  startVelocity: 40,
+  origin: { y: 0.6 }
+});
+
       // Play applause sound for 6 seconds
       clapAudio.currentTime = 0;
       clapAudio.play();
