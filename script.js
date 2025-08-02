@@ -160,30 +160,18 @@ function generateLink() {
 //  weather information function below //
 
 function fetchWeather() {
-  if (!navigator.geolocation) {
-    document.getElementById('weather').innerText = 'Geolocation not supported.';
-    return;
-  }
-
   navigator.geolocation.getCurrentPosition(async (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    const apiKey = 'bf0800fb0d447c9c628bd4a2230038b5'; // 🔁 Replace with your real key
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      const temp = data.main.temp;
-      const city = data.name;
-      const desc = data.weather[0].description;
-      document.getElementById('weather').innerText = `${city}: ${temp}°C, ${desc}`;
-    } catch (error) {
-      document.getElementById('weather').innerText = 'Failed to load weather.';
-      console.error(error);
-    }
-  }, () => {
-    document.getElementById('weather').innerText = 'Location permission denied.';
+    const res = await fetch(`https://weather-proxy-tau.vercel.app/api/weather?lat=${lat}&lon=${lon}`);
+    const data = await res.json();
+
+    const city = data.name;
+    const temp = data.main.temp;
+    const desc = data.weather[0].description;
+
+    document.getElementById('weather').innerText = `${city}: ${temp}°C, ${desc}`;
   });
 }
 
