@@ -82,6 +82,16 @@ function spin() {
       const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
+      const winnerDisplay = document.getElementById("winnerName");
+winnerDisplay.textContent = winner;
+winnerDisplay.classList.add("zoom-out");
+
+// Remove class after animation ends so it can be reused
+setTimeout(() => {
+  winnerDisplay.classList.remove("zoom-out");
+}, 2000); // match animation duration
+
+
       confetti({
   particleCount: 200,
   spread: 150,
