@@ -152,3 +152,14 @@ function fetchWeather() {
 
 // Call the function when the page loads
 fetchWeather();
+
+
+function clickRemove(event) {
+  if (event.target.tagName === 'SPAN') {
+    const name = event.target.innerText;
+    names = names.filter(n => n !== name);
+    updateList();
+    drawWheel();
+  }
+}
+
