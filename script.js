@@ -164,14 +164,24 @@ function fetchWeather() {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-    const res = await fetch(`https://weather-proxy-tau.vercel.app/api/weather?lat=${lat}&lon=${lon}`);
-    const data = await res.json();
+    try {
+      const res = await fetch(`https://weather-proxy-tau.vercel.app/api/weather?lat=${lat}&lon=${lon}`);
+      if (!res.ok) throw new Error("Weather fetch failed");
 
-    const city = data.name;
-    const temp = data.main.temp;
-    const desc = data.weather[0].description;
+      const data = await res.json();
 
-    document.getElementById('weather').innerText = `${city}: ${temp}°C, ${desc}`;
+      const city = data.name;
+      const temp = data.main.temp;
+      const desc = data.weather[0].description;
+
+      document.getElementById('weather').innerText = `${city}: ${temp}°C, ${desc}`;
+    } catch (err) {
+      document.getElementById('weather').innerText = `Weather fetch failed.`;
+      console.error(err);
+    }
+  }, (err) => {
+    document.getElementById('weather').innerText = `Location access denied.`;
+    console.error(err);
   });
 }
 
