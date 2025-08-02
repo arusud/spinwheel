@@ -104,8 +104,22 @@ function resetNames() {
 }
 
 function updateList() {
-  document.getElementById('namesList').innerText = `Names: ${names.join(', ')}`;
+  const container = document.getElementById('namesList');
+  container.innerHTML = '';
+  names.forEach(name => {
+    const span = document.createElement('span');
+    span.textContent = name;
+    span.style.margin = '5px';
+    span.style.padding = '5px 10px';
+    span.style.background = '#eee';
+    span.style.border = '1px solid #aaa';
+    span.style.borderRadius = '8px';
+    span.style.cursor = 'pointer';
+    span.title = 'Click to remove';
+    container.appendChild(span);
+  });
 }
+
 
 function generateLink() {
   if (names.length === 0) {
