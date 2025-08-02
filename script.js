@@ -41,23 +41,50 @@ function drawWheel() {
 
 function spin() {
   if (spinning || names.length === 0) return;
+
+  const spinAudio = document.getElementById('spinAudio');
+  const clapAudio = document.getElementById('clapAudio');
+
   spinning = true;
+  spinAudio.currentTime = 0;
+  spinAudio.play();
+
   let duration = Math.random() * 3000 + 4000;
   let start = Date.now();
-  let spinAnim = () => {
+
+  const spinAnim = () => {
     let time = Date.now() - start;
+    // Easing effect: decelerate
     angle += (Math.PI / 30) * Math.exp(-time / 2000);
     drawWheel();
+
     if (time < duration) {
       requestAnimationFrame(spinAnim);
     } else {
+      spinAudio.pause();
       spinning = false;
+
+      // Calculate winner
       let winnerIndex = Math.floor((names.length - (angle % (2 * Math.PI)) / (2 * Math.PI)) * names.length) % names.length;
-      winnerEl.innerText = `🎉 Winner: ${names[winnerIndex]}! 🎉`;
+      let winnerName = names[winnerIndex];
+
+      // Show winner
+      document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
+
+      // Clap!
+      clapAudio.currentTime = 0;
+      clapAudio.play();
+
+      // Remove winner from list
+      names.splice(winnerIndex, 1);
+      updateList();
+      drawWheel();
     }
   };
+
   spinAnim();
 }
+
 
 function addName() {
   const input = document.getElementById('nameInput');
