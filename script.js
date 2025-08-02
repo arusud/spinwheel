@@ -44,52 +44,62 @@ function spin() {
 
   const spinAudio = document.getElementById('spinAudio');
   const clapAudio = document.getElementById('clapAudio');
-
   spinning = true;
   spinAudio.currentTime = 0;
   spinAudio.play();
 
-  let duration = Math.random() * 3000 + 4000;
-  let start = Date.now();
+  const spinDuration = 5000; // total spin duration in ms
+  const startTime = performance.now();
+  const totalRotation = Math.random() * 4 * Math.PI + 10 * Math.PI; // 5-7 full spins
 
-  const spinAnim = () => {
-    let time = Date.now() - start;
-    // Easing effect: decelerate
-    angle += (Math.PI / 30) * Math.exp(-time / 2000);
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate(currentTime) {
+    let elapsed = currentTime - startTime;
+    let t = Math.min(elapsed / spinDuration, 1); // normalize to 0-1
+    let easedT = easeOutCubic(t);
+
+    angle = easedT * totalRotation;
+
     drawWheel();
 
-    if (time < duration) {
-      requestAnimationFrame(spinAnim);
+    if (t < 1) {
+      requestAnimationFrame(animate);
     } else {
       spinAudio.pause();
+      spinAudio.currentTime = 0;
+
       spinning = false;
 
-      // Calculate winner
-      let winnerIndex = Math.floor((names.length - (angle % (2 * Math.PI)) / (2 * Math.PI)) * names.length) % names.length;
-      let winnerName = names[winnerIndex];
+      // Determine winner
+      const arc = (2 * Math.PI) / names.length;
+      let currentAngle = angle % (2 * Math.PI);
+      let winnerIndex = names.length - Math.floor(currentAngle / arc) - 1;
+      if (winnerIndex < 0) winnerIndex += names.length;
 
-      // Show winner
+      const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
-      // Clap!
-    clapAudio.currentTime = 0;
-clapAudio.play();
+      // Play applause sound for 6 seconds
+      clapAudio.currentTime = 0;
+      clapAudio.play();
+      setTimeout(() => {
+        clapAudio.pause();
+        clapAudio.currentTime = 0;
+      }, 6000);
 
-setTimeout(() => {
-  clapAudio.pause();
-  clapAudio.currentTime = 0;
-}, 6000); // 6000 ms = 6 seconds
-
-
-      // Remove winner from list
-      //names.splice(winnerIndex, 1);
-      //updateList();
-      //drawWheel();
+      // Remove winner from names
+      // names.splice(winnerIndex, 1);
+      // updateList();
+      // drawWheel();
     }
-  };
+  }
 
-  spinAnim();
+  requestAnimationFrame(animate);
 }
+
 
 
 function addName() {
