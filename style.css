@@ -17,6 +17,13 @@ h1 {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
+body {
+  background-image: url('https://picsum.photos/1600/900?random=1');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 #wheel {
   width: 350px;
   height: 350px;
