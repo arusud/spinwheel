@@ -208,3 +208,26 @@ function clickRemove(event) {
   }
 }
 
+function renderNames() {
+  const namesList = document.getElementById("namesList");
+  namesList.innerHTML = ""; // clear old list
+
+  names.forEach((name, index) => {
+    const nameTag = document.createElement("span");
+    nameTag.className = "name-tag";
+    nameTag.textContent = name;
+
+    // Remove name on click
+    nameTag.onclick = () => {
+      names.splice(index, 1);
+      renderNames();
+      updateWheel();
+      updateShareLink();
+    };
+
+    namesList.appendChild(nameTag);
+  });
+
+  updateWheel(); // redraw wheel with updated names
+}
+
