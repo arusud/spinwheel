@@ -87,7 +87,8 @@ function spin() {
 
       const winnerName = names[winnerIndex];
      // document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
-     document.getElementById('winner').innerText = aiCongratsMessage(winnerName);
+     //document.getElementById('winner').innerText = aiCongratsMessage(winnerName);
+     document.getElementById('winner'). innerHTML = aiCongratsMessage(winnerName);   
 
 
 fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
@@ -267,8 +268,6 @@ function aiCongratsMessage(name) {
   return templates[Math.floor(Math.random() * templates.length)];
 }
 
-// Example usage:
-document.getElementById("winner").innerHTML = aiCongratsMessage("fd");
 
 
 
