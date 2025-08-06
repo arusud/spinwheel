@@ -209,20 +209,28 @@ function clickRemove(event) {
 }
 
 function fireConfettiAtWheel() {
-  const wheel = document.getElementById("wheel"); // Canvas ID for the wheel
+  const wheel = document.getElementById("wheel");
   if (!wheel) return;
 
   const rect = wheel.getBoundingClientRect();
 
-   // Convert center position of wheel to normalized values (0–1) relative to the document
-  const centerX = (rect.left + rect.width / 2) / document.documentElement.clientWidth;
-  const centerY = (rect.top + rect.height / 2) / document.documentElement.clientHeight;
+  // Account for scrolling to get the actual visible position
+  const scrollX = window.scrollX || window.pageXOffset;
+  const scrollY = window.scrollY || window.pageYOffset;
+
+  // Center position in pixels relative to document
+  const centerXpx = rect.left + scrollX + rect.width / 2;
+  const centerYpx = rect.top + scrollY + rect.height / 2;
+
+  // Convert to 0–1 coordinates for confetti.js
+  const originX = centerXpx / document.documentElement.scrollWidth;
+  const originY = centerYpx / document.documentElement.scrollHeight;
 
   confetti({
     particleCount: 200,
     spread: 360,
     startVelocity: 45,
-    origin: { x: centerX, y: centerY },
+    origin: { x: originX, y: originY },
     zIndex: 9999
   });
 }
