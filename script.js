@@ -219,12 +219,14 @@ function resizeCanvas() {
 }
 
 function fireConfettiAtWheel() {
-  const wheel = document.getElementById("wheel"); // your <canvas> id
+  const wheel = document.getElementById("wheel"); // Canvas ID for the wheel
+  if (!wheel) return;
+
   const rect = wheel.getBoundingClientRect();
 
-  // Calculate center of wheel relative to viewport
-  const centerX = (rect.left + rect.right) / 2 / window.innerWidth;
-  const centerY = (rect.top + rect.bottom) / 2 / window.innerHeight;
+  // Convert center position of wheel to normalized values (0–1)
+  const centerX = (rect.left + rect.width / 2) / window.innerWidth;
+  const centerY = (rect.top + rect.height / 2) / window.innerHeight;
 
   confetti({
     particleCount: 200,
@@ -234,6 +236,7 @@ function fireConfettiAtWheel() {
     zIndex: 9999
   });
 }
+
 
 
 
