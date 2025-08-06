@@ -238,7 +238,7 @@ function fireConfettiAtWheel() {
 }
 
 function aiCongratsMessage(name) {
-  const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`; // Bold blue name
+  const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`; // 💙 Bold blue name
   
   const templates = [
     `🏆 ${nameStyled} takes the crown!`,
@@ -265,6 +265,7 @@ function aiCongratsMessage(name) {
   
   return templates[Math.floor(Math.random() * templates.length)];
 }
+
 
 
 
