@@ -214,9 +214,9 @@ function fireConfettiAtWheel() {
 
   const rect = wheel.getBoundingClientRect();
 
-  // Convert center position of wheel to normalized values (0–1)
-  const centerX = (rect.left + rect.width / 2) / window.innerWidth;
-  const centerY = (rect.top + rect.height / 2) / window.innerHeight;
+   // Convert center position of wheel to normalized values (0–1) relative to the document
+  const centerX = (rect.left + rect.width / 2) / document.documentElement.clientWidth;
+  const centerY = (rect.top + rect.height / 2) / document.documentElement.clientHeight;
 
   confetti({
     particleCount: 200,
