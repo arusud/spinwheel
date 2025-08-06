@@ -97,12 +97,13 @@ setTimeout(() => {
 }, 2000); // match animation duration
 
 
-      confetti({
+     confetti({
   particleCount: 200,
-  spread: 150,
-  startVelocity: 40,
-  origin: { y: 0.6 }
+  spread: 360,
+  startVelocity: 45,
+  origin: { x: 0.5, y: 0.5 } // Center of the screen
 });
+
 
       // Play applause sound for 6 seconds
       clapAudio.currentTime = 0;
