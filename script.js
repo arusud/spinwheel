@@ -86,7 +86,7 @@ function spin() {
       if (winnerIndex < 0) winnerIndex += names.length;
 
       const winnerName = names[winnerIndex];
-      document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
+     // document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
      document.getElementById('winner').innerText = aiCongratsMessage(winnerName);
 
 
