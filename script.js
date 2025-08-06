@@ -22,28 +22,44 @@ window.onload = function() {
 };
 
 function drawWheel() {
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 250;
   const arc = (2 * Math.PI) / names.length;
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw wheel segments
   names.forEach((name, i) => {
     let start = arc * i;
     let end = start + arc;
 
     ctx.beginPath();
     ctx.fillStyle = `hsl(${i * 360 / names.length}, 80%, 70%)`;
-    ctx.moveTo(250, 250);
-    ctx.arc(250, 250, 250, start + angle, end + angle);
+    ctx.moveTo(centerX, centerY);
+    ctx.arc(centerX, centerY, radius, start + angle, end + angle);
     ctx.fill();
 
     ctx.save();
-    ctx.translate(250, 250);
+    ctx.translate(centerX, centerY);
     ctx.rotate(start + arc / 2 + angle);
     ctx.textAlign = 'right';
     ctx.fillStyle = '#000';
     ctx.font = 'bold 16px sans-serif';
-    ctx.fillText(name, 230, 10);
+    ctx.fillText(name, radius - 20, 10);
     ctx.restore();
   });
+
+  // Draw pointer (arrow) at the top center
+  ctx.fillStyle = 'blue';
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY - radius - 10);  // Tip of arrow
+  ctx.lineTo(centerX - 15, centerY - radius - 40); // Left base
+  ctx.lineTo(centerX + 15, centerY - radius - 40); // Right base
+  ctx.closePath();
+  ctx.fill();
 }
+
 
 function spin() {
   if (spinning || names.length === 0) return;
