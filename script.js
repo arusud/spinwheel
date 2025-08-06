@@ -88,12 +88,7 @@ function spin() {
       const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
 
-     myConfetti({
-  particleCount: 200,
-  spread: 360,
-  startVelocity: 45,
-  origin: { x: 0.5, y: 0.5 }
-});
+fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
 
       const winnerDisplay = document.getElementById("winnerName");
 winnerDisplay.textContent = winnerName;
@@ -103,10 +98,6 @@ winnerDisplay.classList.add("zoom-out");
 setTimeout(() => {
   winnerDisplay.classList.remove("zoom-out");
 }, 2000); // match animation duration
-
-
-fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
-
 
       // Play applause sound for 6 seconds
       clapAudio.currentTime = 0;
