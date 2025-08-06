@@ -1,14 +1,17 @@
 const urlParams = new URLSearchParams(window.location.search);
 let names = [];
+//-------------------------------------------------------------------
+// if (urlParams.has('names')) {
+//  names = urlParams.get('names').split(',');
+//} else {
+//  names = [];
+//}  
+//-------------------------------------------------------------------
+if (urlNames) {
+  names = urlNames.split(',').map(name => name.trim());
+  renderNames(); // Call your function to display the names in UI/wheel
+//-------------------------------------------------------------------
 
-if (urlParams.has('names')) {
-  names = urlParams.get('names').split(',');
-} else {
-  names = [];
-}
-
-
-//let names = [];  duplicate , its already mentioned above, remove it
 let angle = 0;
 let spinning = false;
 const canvas = document.getElementById('wheel');
