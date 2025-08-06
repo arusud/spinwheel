@@ -87,6 +87,8 @@ function spin() {
 
       const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
+     document.getElementById('winner').innerText = aiCongratsMessage(winnerName);
+
 
 fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
 
@@ -235,6 +237,31 @@ function fireConfettiAtWheel() {
   });
 }
 
+function aiCongratsMessage(name) {
+  const templates = [
+    `🏆 ${name} takes the crown!`,
+    `🐦‍🔥 ${name} rises from ashes!`,
+    `🎯 Bullseye! ${name} wins!`,
+    `💫 ${name} spins to victory!`,
+    `🥳 All hail ${name}, our champion!`,
+    `🚀 ${name} just launched into the winner’s circle!`,
+    `🌟 ${name} shines bright as today’s victor!`,
+    `💥 Boom! ${name} just crushed it!`,
+    `🎩 Tip your hat to ${name}, folks!`,
+    `🍀 Luck loves ${name} today!`,
+    `🎉 Confetti showers for ${name}!`,
+    `⚡ ${name} zapped their way to the top!`,
+    `🦸 ${name} saves the day… and wins!`,
+    `💎 ${name} is a rare gem of a winner!`,
+    `📣 Everybody cheer for ${name}!`,
+    `🌈 ${name} just caught the pot of gold!`,
+    `🕺 ${name} dances away with the prize!`,
+    `🍾 Pop the champagne for ${name}!`,
+    `👑 Bow down to ${name}, the ruler of the wheel!`,
+    `🏅 ${name} adds another medal to the collection!`
+  ];
+  return templates[Math.floor(Math.random() * templates.length)];
+}
 
 
 
