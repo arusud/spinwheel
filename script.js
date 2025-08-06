@@ -15,7 +15,7 @@ const winnerEl = document.getElementById('winner');
 
 // Run once on load
 window.onload = function() {
-  resizeCanvas();  // sets canvas size based on screen
+  //resizeCanvas();  // sets canvas size based on screen
  updateList();
   drawWheel();     // draw wheel immediately
 };
