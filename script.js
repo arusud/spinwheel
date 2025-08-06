@@ -1,20 +1,12 @@
 const urlParams = new URLSearchParams(window.location.search);
 let names = [];
 //-------------------------------------------------------------------
-// if (urlParams.has('names')) {
-//  names = urlParams.get('names').split(',');
-//} else {
-//  names = [];
-//}  
+ if (urlParams.has('names')) {
+  names = urlParams.get('names').split(',');
+} else {
+  names = [];
+}  
 //-------------------------------------------------------------------
-
-const urlNames = urlParams.get('names');
-if (urlNames) {
-  names = urlNames.split(',').map(name => name.trim());
-  renderNames();// Call your function to display the names in UI/wheel
-}
-//-------------------------------------------------------------------
-
 let angle = 0;
 let spinning = false;
 const canvas = document.getElementById('wheel');
@@ -214,27 +206,4 @@ function clickRemove(event) {
   }
 }
 
-function renderNames() {
-  const namesList = document.getElementById("namesList");
-  namesList.innerHTML = ""; // clear old list
-
-  names.forEach((name, index) => {
-    const nameTag = document.createElement("span");
-    nameTag.className = "name-tag";
-    nameTag.textContent = name;
-
-    // Remove name on click
-    nameTag.onclick = () => {
-      names.splice(index, 1);
-      renderNames();
-      updateList();
-    drawWheel();
-          updateShareLink();
-    };
-
-    namesList.appendChild(nameTag);
-  });
-
-    drawWheel(); // redraw wheel with updated names
-}
 
