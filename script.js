@@ -13,6 +13,12 @@ const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const winnerEl = document.getElementById('winner');
 
+// Run once on load
+window.onload = function() {
+  resizeCanvas();  // sets canvas size based on screen
+  drawWheel();     // draw wheel immediately
+};
+
 function drawWheel() {
   const arc = (2 * Math.PI) / names.length;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -205,5 +211,15 @@ function clickRemove(event) {
     drawWheel();
   }
 }
+
+function resizeCanvas() {
+  // Match drawing size to CSS size
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+
+  // Redraw wheel after resizing
+  drawWheel();
+}
+
 
 
