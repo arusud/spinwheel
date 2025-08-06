@@ -7,9 +7,12 @@ let names = [];
 //  names = [];
 //}  
 //-------------------------------------------------------------------
+
+const urlNames = urlParams.get('names');
 if (urlNames) {
   names = urlNames.split(',').map(name => name.trim());
-  renderNames(); // Call your function to display the names in UI/wheel
+  renderNames();// Call your function to display the names in UI/wheel
+}
 //-------------------------------------------------------------------
 
 let angle = 0;
