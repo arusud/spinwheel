@@ -13,6 +13,9 @@ const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const winnerEl = document.getElementById('winner');
 
+const wheelCanvas = document.getElementById("wheel");
+const myConfetti = confetti.create(wheelCanvas, { resize: true, useWorker: true });
+
 // Run once on load
 window.onload = function() {
   //resizeCanvas();  // sets canvas size based on screen
@@ -86,6 +89,13 @@ function spin() {
 
       const winnerName = names[winnerIndex];
       document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
+
+     myConfetti({
+  particleCount: 200,
+  spread: 360,
+  startVelocity: 45,
+  origin: { x: 0.5, y: 0.5 }
+});
 
       const winnerDisplay = document.getElementById("winnerName");
 winnerDisplay.textContent = winnerName;
@@ -218,24 +228,7 @@ function resizeCanvas() {
   drawWheel();
 }
 
-function fireConfettiAtWheel() {
-  const wheel = document.getElementById("wheel"); // Canvas ID for the wheel
-  if (!wheel) return;
 
-  const rect = wheel.getBoundingClientRect();
-
-  // Convert center position of wheel to normalized values (0–1)
-  const centerX = (rect.left + rect.width / 2) / window.innerWidth;
-  const centerY = (rect.top + rect.height / 2) / window.innerHeight;
-
-  confetti({
-    particleCount: 200,
-    spread: 360,
-    startVelocity: 45,
-    origin: { x: centerX, y: centerY },
-    zIndex: 9999
-  });
-}
 
 
 
