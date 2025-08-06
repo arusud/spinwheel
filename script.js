@@ -97,12 +97,7 @@ setTimeout(() => {
 }, 2000); // match animation duration
 
 
-     confetti({
-  particleCount: 200,
-  spread: 360,
-  startVelocity: 45,
-  origin: { x: 0.5, y: 0.5 } // Center of the screen
-});
+fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
 
 
       // Play applause sound for 6 seconds
@@ -223,5 +218,24 @@ function resizeCanvas() {
   drawWheel();
 }
 
+function fireConfettiAtWheel() {
+  const wheel = document.getElementById("wheel"); // your <canvas> id
+  const rect = wheel.getBoundingClientRect();
+
+  // Calculate center of wheel relative to viewport
+  const centerX = (rect.left + rect.right) / 2 / window.innerWidth;
+  const centerY = (rect.top + rect.bottom) / 2 / window.innerHeight;
+
+  confetti({
+    particleCount: 200,
+    spread: 360,
+    startVelocity: 45,
+    origin: { x: centerX, y: centerY },
+    zIndex: 9999
+  });
+}
+
+// Call this when winner is announced
+fireConfettiAtWheel();
 
 
