@@ -13,8 +13,6 @@ const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const winnerEl = document.getElementById('winner');
 
-const wheelCanvas = document.getElementById("wheel");
-const myConfetti = confetti.create(wheelCanvas, { resize: true, useWorker: true });
 
 // Run once on load
 window.onload = function() {
@@ -217,15 +215,6 @@ function clickRemove(event) {
     updateList();
     drawWheel();
   }
-}
-
-function resizeCanvas() {
-  // Match drawing size to CSS size
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-
-  // Redraw wheel after resizing
-  drawWheel();
 }
 
 
