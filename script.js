@@ -237,6 +237,7 @@ function fireConfettiAtWheel() {
   });
 }
 
+// Winner message generator
 function aiCongratsMessage(name) {
   const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`; // 💙 Bold blue name
   
@@ -265,6 +266,9 @@ function aiCongratsMessage(name) {
   
   return templates[Math.floor(Math.random() * templates.length)];
 }
+
+// Example usage:
+document.getElementById("winner").innerHTML = aiCongratsMessage("fd");
 
 
 
