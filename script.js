@@ -227,13 +227,14 @@ function renderNames() {
     nameTag.onclick = () => {
       names.splice(index, 1);
       renderNames();
-      updateWheel();
-      updateShareLink();
+      updateList();
+    drawWheel();
+          updateShareLink();
     };
 
     namesList.appendChild(nameTag);
   });
 
-  updateWheel(); // redraw wheel with updated names
+    drawWheel(); // redraw wheel with updated names
 }
 
