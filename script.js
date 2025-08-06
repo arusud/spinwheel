@@ -238,30 +238,34 @@ function fireConfettiAtWheel() {
 }
 
 function aiCongratsMessage(name) {
+  const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`; // Bold blue name
+  
   const templates = [
-    `🏆 ${name} takes the crown!`,
-    `🐦‍🔥 ${name} rises from ashes!`,
-    `🎯 Bullseye! ${name} wins!`,
-    `💫 ${name} spins to victory!`,
-    `🥳 All hail ${name}, our champion!`,
-    `🚀 ${name} just launched into the winner’s circle!`,
-    `🌟 ${name} shines bright as today’s victor!`,
-    `💥 Boom! ${name} just crushed it!`,
-    `🎩 Tip your hat to ${name}, folks!`,
-    `🍀 Luck loves ${name} today!`,
-    `🎉 Confetti showers for ${name}!`,
-    `⚡ ${name} zapped their way to the top!`,
-    `🦸 ${name} saves the day… and wins!`,
-    `💎 ${name} is a rare gem of a winner!`,
-    `📣 Everybody cheer for ${name}!`,
-    `🌈 ${name} just caught the pot of gold!`,
-    `🕺 ${name} dances away with the prize!`,
-    `🍾 Pop the champagne for ${name}!`,
-    `👑 Bow down to ${name}, the ruler of the wheel!`,
-    `🏅 ${name} adds another medal to the collection!`
+    `🏆 ${nameStyled} takes the crown!`,
+    `🐦‍🔥 ${nameStyled} rises from ashes!`,
+    `🎯 Bullseye! ${nameStyled} wins!`,
+    `💫 ${nameStyled} spins to victory!`,
+    `🥳 All hail ${nameStyled}, our champion!`,
+    `🚀 ${nameStyled} just launched into the winner’s circle!`,
+    `🌟 ${nameStyled} shines bright as today’s victor!`,
+    `💥 Boom! ${nameStyled} just crushed it!`,
+    `🎩 Tip your hat to ${nameStyled}, folks!`,
+    `🍀 Luck loves ${nameStyled} today!`,
+    `🎉 Confetti showers for ${nameStyled}!`,
+    `⚡ ${nameStyled} zapped their way to the top!`,
+    `🦸 ${nameStyled} saves the day… and wins!`,
+    `💎 ${nameStyled} is a rare gem of a winner!`,
+    `📣 Everybody cheer for ${nameStyled}!`,
+    `🌈 ${nameStyled} just caught the pot of gold!`,
+    `🕺 ${nameStyled} dances away with the prize!`,
+    `🍾 Pop the champagne for ${nameStyled}!`,
+    `👑 Bow down to ${nameStyled}, the ruler of the wheel!`,
+    `🏅 ${nameStyled} adds another medal to the collection!`
   ];
+  
   return templates[Math.floor(Math.random() * templates.length)];
 }
+
 
 
 
