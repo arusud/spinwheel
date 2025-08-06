@@ -217,6 +217,24 @@ function clickRemove(event) {
   }
 }
 
+function fireConfettiAtWheel() {
+  const wheel = document.getElementById("wheel"); // Canvas ID for the wheel
+  if (!wheel) return;
+
+  const rect = wheel.getBoundingClientRect();
+
+  // Convert center position of wheel to normalized values (0–1)
+  const centerX = (rect.left + rect.width / 2) / window.innerWidth;
+  const centerY = (rect.top + rect.height / 2) / window.innerHeight;
+
+  confetti({
+    particleCount: 200,
+    spread: 360,
+    startVelocity: 45,
+    origin: { x: centerX, y: centerY },
+    zIndex: 9999
+  });
+}
 
 
 
