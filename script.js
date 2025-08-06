@@ -235,7 +235,5 @@ function fireConfettiAtWheel() {
   });
 }
 
-// Call this when winner is announced
-fireConfettiAtWheel();
 
 
