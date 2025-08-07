@@ -1,32 +1,36 @@
 const urlParams = new URLSearchParams(window.location.search);
 let names = [];
-//-------------------------------------------------------------------
- if (urlParams.has('names')) {
+
+if (urlParams.has('names')) {
   names = urlParams.get('names').split(',');
-} else {
-  names = [];
-}  
-//-------------------------------------------------------------------
+}
+
 let angle = 0;
 let spinning = false;
+
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
 const winnerEl = document.getElementById('winner');
 
-
 // Run once on load
-window.onload = function() {
-  //resizeCanvas();  // sets canvas size based on screen
- updateList();
-  drawWheel();     // draw wheel immediately
+window.onload = function () {
+  updateList();
+  drawWheel();
+  fetchWeather();
+
+  // Click-to-remove handler
+  document.getElementById('namesList').addEventListener('click', clickRemove);
 };
 
 function drawWheel() {
+  if (names.length === 0) return;
+
   const arc = (2 * Math.PI) / names.length;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   names.forEach((name, i) => {
-    let start = arc * i;
-    let end = start + arc;
+    const start = arc * i;
+    const end = start + arc;
 
     ctx.beginPath();
     ctx.fillStyle = `hsl(${i * 360 / names.length}, 80%, 70%)`;
@@ -51,33 +55,32 @@ function spin() {
   const spinAudio = document.getElementById('spinAudio');
   const clapAudio = document.getElementById('clapAudio');
   spinning = true;
+
   spinAudio.currentTime = 0;
   spinAudio.play();
 
-  const spinDuration = 5000; // total spin duration in ms
+  const spinDuration = 5000;
   const startTime = performance.now();
-  const totalRotation = Math.random() * 4 * Math.PI + 10 * Math.PI; // 5-7 full spins
+  const totalRotation = Math.random() * 4 * Math.PI + 10 * Math.PI;
 
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
   }
 
   function animate(currentTime) {
-    let elapsed = currentTime - startTime;
-    let t = Math.min(elapsed / spinDuration, 1); // normalize to 0-1
-    let easedT = easeOutCubic(t);
+    const elapsed = currentTime - startTime;
+    const t = Math.min(elapsed / spinDuration, 1);
+    const easedT = easeOutCubic(t);
 
     angle = easedT * totalRotation;
-
     drawWheel();
 
     if (t < 1) {
       requestAnimationFrame(animate);
     } else {
+      spinning = false;
       spinAudio.pause();
       spinAudio.currentTime = 0;
-
-      spinning = false;
 
       // Determine winner
       const arc = (2 * Math.PI) / names.length;
@@ -86,41 +89,32 @@ function spin() {
       if (winnerIndex < 0) winnerIndex += names.length;
 
       const winnerName = names[winnerIndex];
-     // document.getElementById('winner').innerText = `🎉 Winner: ${winnerName}! 🎉`;
-     //document.getElementById('winner').innerText = aiCongratsMessage(winnerName);
-     document.getElementById('winner'). innerHTML = aiCongratsMessage(winnerName);   
+      winnerEl.innerHTML = aiCongratsMessage(winnerName);
 
-
-fireConfettiAtWheel(); // 🎉 Fire from the center of the wheel
-
+      // Winner animation
       const winnerDisplay = document.getElementById("winnerName");
-winnerDisplay.textContent = winnerName;
-winnerDisplay.classList.add("zoom-out");
+      if (winnerDisplay) {
+        winnerDisplay.textContent = winnerName;
+        winnerDisplay.classList.add("zoom-out");
+        setTimeout(() => {
+          winnerDisplay.classList.remove("zoom-out");
+        }, 2000);
+      }
 
-// Remove class after animation ends so it can be reused
-setTimeout(() => {
-  winnerDisplay.classList.remove("zoom-out");
-}, 2000); // match animation duration
+      fireConfettiAtWheel();
 
-      // Play applause sound for 6 seconds
+      // Applause sound
       clapAudio.currentTime = 0;
       clapAudio.play();
       setTimeout(() => {
         clapAudio.pause();
         clapAudio.currentTime = 0;
       }, 6000);
-
-      // Remove winner from names
-      // names.splice(winnerIndex, 1);
-      // updateList();
-      // drawWheel();
     }
   }
 
   requestAnimationFrame(animate);
 }
-
-
 
 function addName() {
   const input = document.getElementById('nameInput');
@@ -145,23 +139,34 @@ function updateList() {
   names.forEach(name => {
     const span = document.createElement('span');
     span.textContent = name;
-    span.style.margin = '5px';
-    span.style.padding = '5px 10px';
-    span.style.background = '#eee';
-    span.style.border = '1px solid #aaa';
-    span.style.borderRadius = '8px';
-    span.style.cursor = 'pointer';
+    Object.assign(span.style, {
+      margin: '5px',
+      padding: '5px 10px',
+      background: '#eee',
+      border: '1px solid #aaa',
+      borderRadius: '8px',
+      cursor: 'pointer'
+    });
     span.title = 'Click to remove';
     container.appendChild(span);
   });
 }
 
+function clickRemove(event) {
+  if (event.target.tagName === 'SPAN') {
+    const name = event.target.innerText;
+    names = names.filter(n => n !== name);
+    updateList();
+    drawWheel();
+  }
+}
 
 function generateLink() {
   if (names.length === 0) {
     alert("Please add names first!");
     return;
   }
+
   const encoded = encodeURIComponent(names.join(','));
   const link = `${window.location.origin}${window.location.pathname}?names=${encoded}`;
   document.getElementById('shareLink').innerHTML = `
@@ -169,8 +174,6 @@ function generateLink() {
     <p>Copy and share this link</p>
   `;
 }
-
-//  weather information function below //
 
 function fetchWeather() {
   navigator.geolocation.getCurrentPosition(async (position) => {
@@ -182,7 +185,6 @@ function fetchWeather() {
       if (!res.ok) throw new Error("Weather fetch failed");
 
       const data = await res.json();
-
       const city = data.name;
       const temp = data.main.temp;
       const desc = data.weather[0].description;
@@ -198,34 +200,17 @@ function fetchWeather() {
   });
 }
 
-// Call the function when the page loads
-fetchWeather();
-
-
-function clickRemove(event) {
-  if (event.target.tagName === 'SPAN') {
-    const name = event.target.innerText;
-    names = names.filter(n => n !== name);
-    updateList();
-    drawWheel();
-  }
-}
-
 function fireConfettiAtWheel() {
   const wheel = document.getElementById("wheel");
   if (!wheel) return;
 
   const rect = wheel.getBoundingClientRect();
-
-  // Account for scrolling to get the actual visible position
   const scrollX = window.scrollX || window.pageXOffset;
   const scrollY = window.scrollY || window.pageYOffset;
 
-  // Center position in pixels relative to document
   const centerXpx = rect.left + scrollX + rect.width / 2;
   const centerYpx = rect.top + scrollY + rect.height / 2;
 
-  // Convert to 0–1 coordinates for confetti.js
   const originX = centerXpx / document.documentElement.scrollWidth;
   const originY = centerYpx / document.documentElement.scrollHeight;
 
@@ -238,10 +223,8 @@ function fireConfettiAtWheel() {
   });
 }
 
-// Winner message generator
 function aiCongratsMessage(name) {
-  const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`; // 💙 Bold blue name
-  
+  const nameStyled = `<span style="font-weight:bold; color:#2f2fd3;">${name}</span>`;
   const templates = [
     `🏆 ${nameStyled} takes the crown!`,
     `🐦‍🔥 ${nameStyled} rises from ashes!`,
@@ -264,13 +247,5 @@ function aiCongratsMessage(name) {
     `👑 Bow down to ${nameStyled}, the ruler of the wheel!`,
     `🏅 ${nameStyled} adds another medal to the collection!`
   ];
-  
   return templates[Math.floor(Math.random() * templates.length)];
 }
-
-
-
-
-
-
-
